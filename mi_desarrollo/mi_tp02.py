@@ -106,7 +106,22 @@ def ejecutar_comando(robot, comando):
     Eso llega como un ErrorDeSeguridad y conviene atraparlo.
     """
     # TU CODIGO ACA
-    pass
+    nombre = comando[0]
+
+    try:
+        if nombre == "avanzar":
+            robot.avanzar(velocidad=comando[1], tiempo=comando[2])
+        elif nombre == "girar":
+            robot.girar(velocidad=comando[1], tiempo=comando[2])
+        elif nombre == "detenerse":
+            robot.detenerse()
+        elif nombre == "saludar":
+            robot.saludar()
+
+        return f"OK: {nombre} ejecutado"
+
+    except ErrorDeSeguridad as exc:
+        return f"RECHAZADO por seguridad: {exc}"
 
 
 # =====================================================================
