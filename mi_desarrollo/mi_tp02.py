@@ -15,7 +15,7 @@
 
 from robot import ErrorDeSeguridad, Robot
 
-from misiones import MISION_BASICA, MISION_CON_ERRORES, MISION_CUADRADO
+from misiones import MISION_BASICA, MISION_CON_ERRORES, MISION_CUADRADO, MISION_PENTAGONO
 
 # Tabla: cuantos datos lleva cada comando valido.
 FORMATOS = {
