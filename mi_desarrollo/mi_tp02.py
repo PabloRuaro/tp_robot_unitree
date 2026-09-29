@@ -17,6 +17,23 @@ from robot import ErrorDeSeguridad, Robot
 
 from misiones import MISION_BASICA, MISION_CON_ERRORES, MISION_CUADRADO
 
+# Tabla: cuantos datos lleva cada comando valido.
+FORMATOS = {
+    "avanzar": 3,
+    "girar": 3,
+    "detenerse": 1,
+    "saludar": 1,
+}
+
+
+def _es_numero(valor):
+    """True si 'valor' es un numero (int o float), False si no."""
+    # bool es subclase de int: True vale 1 y False vale 0.
+    # Si no lo sacamos, ("avanzar", True, 2.0) pasaria como valido.
+    if isinstance(valor, bool):
+        return False
+    return isinstance(valor, (int, float))
+
 
 # =====================================================================
 #  PARTE 1 - Validar un comando
@@ -40,7 +57,35 @@ def comando_es_valido(comando):
       - que el tiempo no sea negativo
     """
     # TU CODIGO ACA
-    pass
+        # Chequeo 1: tiene que ser una tupla no vacia.
+    if not isinstance(comando, tuple) or len(comando) == 0:
+        return False
+
+    # El primer elemento siempre es el nombre.
+    nombre = comando[0]
+
+    # Chequeo 2: el nombre tiene que ser uno de los 4 validos.
+    if nombre not in FORMATOS:
+        return False
+
+    # Chequeo 3: la cantidad de elementos tiene que coincidir.
+    if len(comando) != FORMATOS[nombre]:
+        return False
+
+    # Chequeos 4 y 5: solo aplican a avanzar y girar.
+    if nombre in ("avanzar", "girar"):
+        velocidad = comando[1]
+        tiempo = comando[2]
+
+        # Chequeo 4: los dos tienen que ser numeros de verdad.
+        if not _es_numero(velocidad) or not _es_numero(tiempo):
+            return False
+
+        # Chequeo 5: el tiempo no puede ser negativo.
+        if tiempo < 0:
+            return False
+
+    return True
 
 
 # =====================================================================
