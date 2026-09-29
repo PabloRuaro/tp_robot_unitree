@@ -138,7 +138,35 @@ def ejecutar_mision(robot, mision, historial):
     Un comando invalido NO tiene que cortar la mision.
     """
     # TU CODIGO ACA
-    pass
+    for numero, comando in enumerate(mision, start=1):
+
+        # Caso A: comando invalido. Lo anotamos y seguimos.
+        if not comando_es_valido(comando):
+            historial.append({
+                "numero": numero,
+                "comando": comando,
+                "resultado": "invalido",
+                "detalle": "el comando no tiene el formato correcto",
+            })
+            continue
+
+        # Caso B: comando valido. Lo intentamos ejecutar.
+        detalle = ejecutar_comando(robot, comando)
+
+        if detalle.startswith("OK"):
+            historial.append({
+                "numero": numero,
+                "comando": comando,
+                "resultado": "ejecutado",
+                "detalle": detalle,
+            })
+        else:
+            historial.append({
+                "numero": numero,
+                "comando": comando,
+                "resultado": "rechazado",
+                "detalle": detalle,
+            })
 
 
 # =====================================================================
